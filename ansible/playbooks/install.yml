@@ -3,7 +3,6 @@
     hosts: all
     vars:
       docker_users:
-        - user1
-        - user2
+        - uadmin
     roles:
       - geerlingguy.docker
