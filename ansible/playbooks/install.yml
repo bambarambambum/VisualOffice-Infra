@@ -1,0 +1,9 @@
+---
+  - name: Install a docker
+    hosts: all
+    vars:
+      docker_users:
+        - user1
+        - user2
+    roles:
+      - geerlingguy.docker
