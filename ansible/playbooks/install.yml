@@ -5,5 +5,8 @@
     vars:
       docker_users:
         - uadmin
+      pip_install_packages:
+        - name: docker
     roles:
       - geerlingguy.docker
+      - geerlingguy.pip
