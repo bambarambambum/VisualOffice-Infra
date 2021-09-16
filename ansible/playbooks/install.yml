@@ -1,6 +1,7 @@
 ---
   - name: Install a docker
     hosts: all
+    become: true
     vars:
       docker_users:
         - uadmin
