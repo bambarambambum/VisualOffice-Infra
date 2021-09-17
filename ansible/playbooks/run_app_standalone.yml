@@ -7,40 +7,40 @@
       - name: Create VisualOffice-webapp container
         community.docker.docker_container:
           name: vo_webapp
-          image: "androsovm/webapp"
+          image: androsovm/webapp
           ports:
           - "8000:8000"
           env:
-            READER_HOST: reader
-            WRITER_HOST: writer
+            READER_HOST: "reader"
+            WRITER_HOST: "writer"
 
       - name: Create VisualOffice-reader container
         community.docker.docker_container:
           name: reader
-          image: "androsovm/reader"
+          image: androsovm/reader
           ports:
           - "8001:8001"
           env:
-            DATABASE_HOST: postgres
+            DATABASE_HOST: "postgres"
 
       - name: Create VisualOffice-writer container
         community.docker.docker_container:
           name: writer
-          image: "androsovm/writer"
+          image: androsovm/writer
           ports:
           - "8002:8002"
           env:
-            DATABASE_HOST: postgres
+            DATABASE_HOST: "postgres"
 
       - name: Create postgres container
         community.docker.docker_container:
           name: pg
-          image: "postgres"
+          image: postgres
           ports:
           - "5432:5432"
           env:
-            POSTGRES_DB: postgres
-            POSTGRES_USER: admin
-            POSTGRES_PASSWORD: admin
+            POSTGRES_DB: "postgres"
+            POSTGRES_USER: "admin"
+            POSTGRES_PASSWORD: "admin"
           volumes:
             - /home/uadmin/docker/volumes/postgres:/var/lib/postgresql/data
