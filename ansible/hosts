@@ -1,3 +1,5 @@
 do-01 ansible_host=172.28.148.221
 do-02 ansible_host=172.28.148.222
 do-03 ansible_host=172.28.148.223
+do-04 ansible_host=172.28.148.224
+do-05 ansible_host=172.28.148.225
