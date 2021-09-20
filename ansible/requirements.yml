@@ -2,4 +2,3 @@
 - src: geerlingguy.docker
 - src: geerlingguy.pip
 - src: community.docker
-- src: geerlingguy.jenkins
