@@ -1,0 +1,10 @@
+---
+  - name: Create and run VisualOffice-webapp container
+    community.docker.docker_container:
+      name: vo_webapp
+      image: androsovm/webapp
+      ports:
+      - "8000:8000"
+      env:
+        READER_HOST: "{{ hostvars['do-02'].ansible_host }}"
+        WRITER_HOST: "{{ hostvars['do-03'].ansible_host }}"

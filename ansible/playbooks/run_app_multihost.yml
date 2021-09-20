@@ -1,0 +1,20 @@
+---
+  - hosts: do-01
+    tasks:
+      - name: Run webapp container
+        include_tasks: run_containers/run_webapp.yml
+
+  - hosts: do-02
+    tasks:
+      - name: Run reader container
+        include_tasks: run_containers/run_reader.yml
+
+  - hosts: do-03
+    tasks:
+      - name: Run writer container
+        include_tasks: run_containers/run_writer.yml
+
+  - hosts: do-04
+    tasks:
+      - name: Run postgres container
+        include_tasks: run_containers/run_postgres.yml

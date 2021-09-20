@@ -1,0 +1,9 @@
+---
+  - name: Create and run VisualOffice-writer container
+    community.docker.docker_container:
+      name: vo_writer
+      image: androsovm/writer
+      ports:
+      - "8002:8002"
+      env:
+        DATABASE_HOST: "{{ hostvars['do-04'].ansible_host }}"

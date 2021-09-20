@@ -1,0 +1,13 @@
+---
+  - name: Create and run postgres container
+    community.docker.docker_container:
+      name: vo_pg
+      image: postgres
+      ports:
+      - "5432:5432"
+      env:
+        POSTGRES_DB: "visualoffice"
+        POSTGRES_USER: "admin"
+        POSTGRES_PASSWORD: "admin"
+      volumes:
+        - /home/uadmin/docker/volumes/postgres:/var/lib/postgresql/data
