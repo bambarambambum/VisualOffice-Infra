@@ -11,3 +11,11 @@
         POSTGRES_PASSWORD: "admin"
       volumes:
         - /home/uadmin/docker/volumes/postgres:/var/lib/postgresql/data
+
+  - name: Create and run container with test data to fill database
+    community.docker.docker_container:
+      name: fill_db
+      image: androsovm/fill_db_script:latest
+      env:
+        DATABASE_HOST: "{{ hostvars['do-04'].ansible_host }}"
+    when: fill_database
