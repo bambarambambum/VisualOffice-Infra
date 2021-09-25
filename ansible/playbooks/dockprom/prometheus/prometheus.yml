@@ -33,6 +33,24 @@ scrape_configs:
         - 172.28.148.223:8080 
         - 172.28.148.224:8080
 
+  - job_name: 'vo_webapp'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - 172.28.148.221:8000
+
+  - job_name: 'vo_reader'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - 172.28.148.222:8001
+
+  - job_name: 'vo_writer'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - 172.28.148.223:8002
+
   - job_name: 'prometheus'
     scrape_interval: 10s
     static_configs:
@@ -43,7 +61,6 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ['pushgateway:9091']
-
 
 alerting:
   alertmanagers:
