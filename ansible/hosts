@@ -1,5 +1,16 @@
+[webapp]
 do-01 ansible_host=172.28.148.221
+[reader]
 do-02 ansible_host=172.28.148.222
+[writer]
 do-03 ansible_host=172.28.148.223
+[database]
 do-04 ansible_host=172.28.148.224
+[monitoring]
 do-05 ansible_host=172.28.148.225
+
+[app:children]
+webapp
+reader
+writer
+database

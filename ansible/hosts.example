@@ -1,3 +1,16 @@
+[webapp]
 do-01 ansible_host=
+[reader]
 do-02 ansible_host=
+[writer]
 do-03 ansible_host=
+[database]
+do-04 ansible_host=
+[monitoring]
+do-05 ansible_host=
+
+[app:children]
+webapp
+reader
+writer
+database
