@@ -1,10 +1,10 @@
 ---
-  - name: Install a docker
-    hosts: do-05
+  - name: Install docker and docker-compose
+    hosts: all
     become: true
     vars:
       docker_users:
-        - uadmin
+        - '{{ ssh_user }}'
       pip_install_packages:
         - name: docker
         - name: docker-compose
