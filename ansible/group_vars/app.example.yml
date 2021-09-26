@@ -1,0 +1,22 @@
+# Webapp
+webapp_container_name: vo_webapp
+webapp_image: androsovm/webapp
+webapp_image_ver: latest
+
+# Reader
+reader_container_name: vo_reader
+reader_image: androsovm/reader
+reader_image_ver: latest
+
+# Writer
+writer_container_name: vo_writer
+writer_image: androsovm/writer
+writer_image_ver: latest
+
+# Postgres
+postgres_container_name: vo_pg
+postgres_image: postgres
+postgres_image_ver: latest
+posgtres_db: visualoffice
+postgres_user: admin
+postgres_password: admin
