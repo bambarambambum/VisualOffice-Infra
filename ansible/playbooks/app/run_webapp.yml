@@ -1,0 +1,18 @@
+---
+  - name: Get hostvars reader_host and writer_host if exist
+    set_fact: 
+      reader_host: "{{ hostvars['do-02'].ansible_host }}"
+      writer_host: "{{ hostvars['do-03'].ansible_host }}"
+    ignore_errors: yes
+    
+  - name: Create and run VisualOffice-webapp container
+    community.docker.docker_container:
+      name: '{{webapp_container_name}}'
+      image: '{{webapp_image}}:{{webapp_image_ver}}'
+      ports:
+      - "8000:8000"
+      env:
+        READER_HOST: "{{ reader_container_name if reader_host is undefined 
+                         else reader_host }}"
+        WRITER_HOST: "{{ writer_container_name if writer_host is undefined 
+                         else writer_host }}"

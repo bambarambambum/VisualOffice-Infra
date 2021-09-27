@@ -1,46 +1,12 @@
 ---
   - name: Run VisualOffice-App on one host
-    hosts: do-04
+    hosts: do-01
     become: true
+    vars:
+      fill_database: true
 
     tasks:
-      - name: Create VisualOffice-webapp container
-        community.docker.docker_container:
-          name: '{{webapp_container_name}}'
-          image: '{{webapp_image}}:{{webapp_image_ver}}'
-          ports:
-          - "8000:8000"
-          env:
-            READER_HOST: '{{reader_container_name}}'
-            WRITER_HOST: '{{writer_container_name}}'
-
-      - name: Create VisualOffice-reader container
-        community.docker.docker_container:
-          name: '{{reader_container_name}}'
-          image: '{{reader_image}}:{{reader_image_ver}}'
-          ports:
-          - "8001:8001"
-          env:
-            DATABASE_HOST: "vo_pg"
-
-      - name: Create VisualOffice-writer container
-        community.docker.docker_container:
-          name: '{{writer_container_name}}'
-          image: '{{writer_image}}:{{writer_image_ver}}'
-          ports:
-          - "8002:8002"
-          env:
-            DATABASE_HOST: "vo_pg"
-
-      - name: Create postgres container
-        community.docker.docker_container:
-          name: '{{postgres_container_name}}'
-          image: '{{postgres_image}}:{{postgres_image_ver}}'
-          ports:
-          - "5432:5432"
-          env:
-            POSTGRES_DB: "visualoffice"
-            POSTGRES_USER: "admin"
-            POSTGRES_PASSWORD: "admin"
-          volumes:
-            - '/home/{{ssh_user}}/docker/volumes/postgres:/var/lib/postgresql/data'
+      - include_tasks: app/run_webapp.yml
+      - include_tasks: app/run_reader.yml
+      - include_tasks: app/run_writer.yml
+      - include_tasks: app/run_postgres.yml

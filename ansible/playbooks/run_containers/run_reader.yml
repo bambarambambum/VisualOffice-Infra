@@ -1,9 +1,0 @@
----
-  - name: Create and run VisualOffice-reader container
-    community.docker.docker_container:
-      name: vo_reader
-      image: androsovm/reader
-      ports:
-      - "8001:8001"
-      env:
-        DATABASE_HOST: "{{ hostvars['do-04'].ansible_host }}"

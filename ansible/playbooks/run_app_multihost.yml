@@ -1,22 +1,22 @@
 ---
   - hosts: do-01
     tasks:
-      - name: Run webapp container
-        include_tasks: run_containers/run_webapp.yml
+      - name: Create and run webapp container
+        include_tasks: app/run_webapp.yml
 
   - hosts: do-02
     tasks:
-      - name: Run reader container
-        include_tasks: run_containers/run_reader.yml
+      - name: Create and run reader container
+        include_tasks: app/run_reader.yml
 
   - hosts: do-03
     tasks:
-      - name: Run writer container
-        include_tasks: run_containers/run_writer.yml
+      - name: Create and run writer container
+        include_tasks: app/run_writer.yml
 
   - hosts: do-04
     vars: 
       fill_database: false
     tasks:
-      - name: Run postgres container
-        include_tasks: run_containers/run_postgres.yml
+      - name: Create and run postgres container
+        include_tasks: app/run_postgres.yml
