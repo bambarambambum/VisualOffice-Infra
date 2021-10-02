@@ -1,0 +1,26 @@
+---
+  - name: Install specified Writer python requirements
+    pip:
+      requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/users_writer/requirements.txt
+    ignore_errors: true
+
+  - name: Install gunicorn
+    pip:
+      name: gunicorn
+
+  - name: Template a file to /etc/systemd/system/vo_writer.service
+    ansible.builtin.template:
+      src: service/templates/vo_writer.service.j2
+      dest: /etc/systemd/system/vo_writer.service
+      mode: '0644'
+
+  - name: Enable service vo_writer
+    ansible.builtin.systemd:
+      name: vo_writer
+      enabled: yes
+      masked: no
+
+  - name: Start service vo_writer
+    ansible.builtin.systemd:
+      state: started
+      name: vo_writer

@@ -1,0 +1,13 @@
+[Unit]
+Description=Visual office Writer application
+After=network.target
+
+[Service]
+User={{ssh_user}}
+Group={{ssh_user}}
+Type=simple
+WorkingDirectory=/home/{{ssh_user}}/VisualOfficeApp-Python/users_writer
+ExecStart=/usr/local/bin/gunicorn -b 0.0.0.0:8002 writer:app
+
+[Install]
+WantedBy=multi-user.target

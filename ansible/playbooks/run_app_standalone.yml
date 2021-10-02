@@ -6,7 +6,7 @@
       fill_database: true
 
     tasks:
-      - include_tasks: app/run_webapp.yml
-      - include_tasks: app/run_reader.yml
-      - include_tasks: app/run_writer.yml
-      - include_tasks: app/run_postgres.yml
+      - include_tasks: docker/run_webapp.yml
+      - include_tasks: docker/run_reader.yml
+      - include_tasks: docker/run_writer.yml
+      - include_tasks: docker/run_postgres.yml

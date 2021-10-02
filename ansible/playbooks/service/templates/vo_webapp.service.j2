@@ -1,0 +1,13 @@
+[Unit]
+Description=Visual office WebApp application
+After=network.target
+
+[Service]
+User={{ssh_user}}
+Group={{ssh_user}}
+Type=simple
+WorkingDirectory=/home/{{ssh_user}}/VisualOfficeApp-Python/webapp
+ExecStart=/usr/local/bin/gunicorn -b 0.0.0.0:8000 webapp:app
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+---
+  - name: Install specified WebApp python requirements
+    pip:
+      requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/webapp/requirements.txt
+    ignore_errors: true
+  
+  - name: Install gunicorn
+    pip:
+      name: gunicorn
+
+  - name: Template a file to /etc/systemd/system/vo_webapp.service
+    ansible.builtin.template:
+      src: service/templates/vo_webapp.service.j2
+      dest: /etc/systemd/system/vo_webapp.service
+      mode: '0644'
+
+  - name: Enable service vo_webapp
+    ansible.builtin.systemd:
+      name: vo_webapp
+      enabled: yes
+      masked: no
+
+  - name: Start service vo_webapp
+    ansible.builtin.systemd:
+      state: started
+      name: vo_webapp
