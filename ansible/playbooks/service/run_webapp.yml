@@ -1,4 +1,10 @@
 ---
+  - name: Get hostvars reader_host and writer_host if exist
+    set_fact: 
+      reader_host: "{{ hostvars['do-02'].ansible_host }}"
+      writer_host: "{{ hostvars['do-03'].ansible_host }}"
+    ignore_errors: yes
+
   - name: Install specified WebApp python requirements
     pip:
       requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/webapp/requirements.txt
@@ -24,3 +30,6 @@
     ansible.builtin.systemd:
       state: started
       name: vo_webapp
+    environment:
+      READER_HOST: "{{ reader_host | default('localhost') }}"
+      WRITER_HOST: "{{ writer_host | default('localhost') }}"

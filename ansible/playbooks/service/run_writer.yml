@@ -1,8 +1,13 @@
 ---
+  - name: Get hostvars postgres_host if exist
+    set_fact: 
+      postgres_host: "{{ hostvars['do-04'].ansible_host }}"
+    ignore_errors: yes
+
   - name: Install specified Writer python requirements
     pip:
       requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/users_writer/requirements.txt
-    ignore_errors: true
+    ignore_errors: yes
 
   - name: Install gunicorn
     pip:
@@ -24,3 +29,5 @@
     ansible.builtin.systemd:
       state: started
       name: vo_writer
+    environment:
+      DATABASE_HOST: "{{ postgres_host  | default('localhost') }}"
