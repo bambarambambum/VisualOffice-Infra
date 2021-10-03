@@ -1,6 +1,0 @@
----
-  - name: Install and upgrade pip
-    pip:
-      name: pip
-      extra_args: --upgrade
-      executable: pip3
