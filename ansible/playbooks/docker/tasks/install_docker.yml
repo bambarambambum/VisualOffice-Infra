@@ -1,0 +1,13 @@
+---
+  - name: Install docker and docker-compose
+    hosts: all
+    become: true
+    vars:
+      docker_users:
+        - '{{ ssh_user }}'
+      pip_install_packages:
+        - name: docker
+        - name: docker-compose
+    roles:
+      - geerlingguy.docker
+      - geerlingguy.pip

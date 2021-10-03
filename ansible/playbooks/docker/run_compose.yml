@@ -1,0 +1,27 @@
+---
+  - name: Run application in one host
+    hosts: do-01
+    become: true
+
+    tasks:
+      - name: Create a visualoffice application directory 
+        ansible.builtin.file:
+          path: /opt/visualoffice
+          state: directory
+          mode: '0755'
+
+      - name: Download file with custom HTTP headers
+        get_url:
+          url: https://raw.githubusercontent.com/bambarambambum/VisualOfficeApp-Python/main/docker-compose.yml
+          dest: /opt/visualoffice/docker-compose.yml
+          mode: '0755'
+
+      - name: Create docker network
+        ansible.builtin.shell:
+          cmd: docker network create frontend
+        ignore_errors: yes
+
+      - name: Create and start services
+        community.docker.docker_compose:
+          project_src: /opt/visualoffice
+            

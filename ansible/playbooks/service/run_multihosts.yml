@@ -1,0 +1,36 @@
+---
+  - hosts: do-01
+    become: true
+    tasks:
+      - name: Clone repo with app
+        include_tasks: tasks/clone_app.yml
+      
+      - name: Install pip
+        include_tasks: tasks/install_pip.yml
+      
+      - name: Run webapp
+        include_tasks: tasks/run_webapp.yml
+
+  - hosts: do-02
+    become: true
+    tasks:
+      - name: Clone repo with app
+        include_tasks: tasks/clone_app.yml
+      
+      - name: Install pip
+        include_tasks: tasks/install_pip.yml
+
+      - name: Run reader
+        include_tasks: tasks/run_reader.yml
+
+  - hosts: do-03
+    become: true
+    tasks:
+      - name: Clone repo with app
+        include_tasks: tasks/clone_app.yml
+      
+      - name: Install pip
+        include_tasks: tasks/install_pip.yml
+        
+      - name: Run writer
+        include_tasks: tasks/run_writer.yml

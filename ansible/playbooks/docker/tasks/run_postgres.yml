@@ -1,0 +1,21 @@
+---
+  - name: Create and run postgres container
+    community.docker.docker_container:
+      name: '{{postgres_container_name}}'
+      image: '{{postgres_image}}:{{postgres_image_ver}}'
+      ports:
+      - "5432:5432"
+      env:
+        POSTGRES_DB: "{{posgtres_db}}"
+        POSTGRES_USER: "{{postgres_user}}"
+        POSTGRES_PASSWORD: "{{postgres_password}}"
+      volumes:
+        - '/home/{{ssh_user}}/docker/volumes/postgres:/var/lib/postgresql/data'
+
+  - name: Create and run container with test data to fill database
+    community.docker.docker_container:
+      name: '{{data_container_name}}'
+      image: '{{data_image}}:{{data_image_ver}}'
+      env:
+        DATABASE_HOST: "{{ hostvars['database'].ansible_host  | default('localhost') }}"
+    when: fill_database

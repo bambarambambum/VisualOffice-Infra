@@ -1,0 +1,12 @@
+---
+  - name: Run VisualOffice-App on one host
+    hosts: do-01
+    become: true
+    vars:
+      fill_database: true
+
+    tasks:
+      - include_tasks: tasks/run_webapp.yml
+      - include_tasks: tasks/run_reader.yml
+      - include_tasks: tasks/run_writer.yml
+      - include_tasks: tasks/run_postgres.yml

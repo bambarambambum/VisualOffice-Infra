@@ -1,0 +1,33 @@
+---
+  - name: Get hostvars postgres_host if exist
+    set_fact: 
+      postgres_host: "{{ hostvars['do-04'].ansible_host }}"
+    ignore_errors: yes
+    
+  - name: Install specified Reader python requirements
+    pip:
+      requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/users_reader/requirements.txt
+    ignore_errors: true
+  
+  - name: Install gunicorn
+    pip:
+      name: gunicorn
+
+  - name: Template a file to /etc/systemd/system/vo_reader.service
+    ansible.builtin.template:
+      src: service/templates/vo_reader.service.j2
+      dest: /etc/systemd/system/vo_reader.service
+      mode: '0644'
+
+  - name: Enable service vo_reader
+    ansible.builtin.systemd:
+      name: vo_reader
+      enabled: yes
+      masked: no
+
+  - name: Start service vo_reader
+    ansible.builtin.systemd:
+      state: started
+      name: vo_reader
+    environment:
+      DATABASE_HOST: "{{ postgres_host  | default('localhost') }}"

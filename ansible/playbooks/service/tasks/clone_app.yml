@@ -1,0 +1,5 @@
+  - name: Git checkout VisualOffice-App-Python
+    ansible.builtin.git:
+      repo: 'https://github.com/bambarambambum/VisualOfficeApp-Python.git'
+      dest: "/home/{{ssh_user}}/VisualOfficeApp-Python"
+    ignore_errors: yes
