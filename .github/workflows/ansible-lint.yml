@@ -16,6 +16,9 @@ jobs:
     - name: Git clone repo
       uses: actions/checkout@v2
 
+    - name: Run command ls 
+      run: ls -l
+
     - name: Lint Ansible Docker Run Playbooks
       uses: ansible/ansible-lint-action@master
       with:
