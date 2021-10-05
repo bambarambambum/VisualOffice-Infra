@@ -23,16 +23,16 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: |
-          VisualOffice-Infra/ansible/playbooks/docker/run_multihost.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_compose.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_standalone.yml
+          ansible/playbooks/docker/run_multihost.yml
+          ansible/playbooks/docker/run_compose.yml
+          ansible/playbooks/docker/run_standalone.yml
 
     - name: Lint Ansible Docker Tasks
       uses: ansible/ansible-lint-action@master
       with:
         targets: |
-          VisualOffice-Infra/ansible/playbooks/docker/install_docker.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_postgres.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_reader.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_webapp.yml
-          VisualOffice-Infra/ansible/playbooks/docker/run_writer.yml
+          ansible/playbooks/docker/install_docker.yml
+          ansible/playbooks/docker/run_postgres.yml
+          ansible/playbooks/docker/run_reader.yml
+          ansible/playbooks/docker/run_webapp.yml
+          ansible/playbooks/docker/run_writer.yml
