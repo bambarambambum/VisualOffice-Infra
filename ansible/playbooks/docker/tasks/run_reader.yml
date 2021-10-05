@@ -6,8 +6,8 @@
 
   - name: Create and run VisualOffice-reader container
     community.docker.docker_container:
-      name: '{{reader_container_name}}'
-      image: '{{reader_image}}:{{reader_image_ver}}'
+      name: '{{ reader_container_name }}'
+      image: '{{ reader_image }}:{{ reader_image_ver }}'
       ports:
       - "8001:8001"
       env:

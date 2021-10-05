@@ -7,8 +7,8 @@
     
   - name: Create and run VisualOffice-webapp container
     community.docker.docker_container:
-      name: '{{webapp_container_name}}'
-      image: '{{webapp_image}}:{{webapp_image_ver}}'
+      name: '{{ webapp_container_name }}'
+      image: '{{ webapp_image }}:{{ webapp_image_ver }}'
       ports:
       - "8000:8000"
       env:

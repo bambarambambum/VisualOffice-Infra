@@ -15,7 +15,7 @@
         include_tasks: tasks/run_writer.yml
 
   - hosts: do-04
-    vars: 
+    vars:
       fill_database: false
     tasks:
       - name: Create and run postgres container

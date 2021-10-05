@@ -6,8 +6,8 @@
 
   - name: Create and run VisualOffice-writer container
     community.docker.docker_container:
-      name: '{{writer_container_name}}'
-      image: '{{writer_image}}:{{writer_image_ver}}'
+      name: '{{ writer_container_name }}'
+      image: '{{ writer_image }}:{{ writer_image_ver }}'
       ports:
       - "8002:8002"
       env:
