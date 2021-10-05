@@ -16,25 +16,20 @@ jobs:
     - name: Git clone repo
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
+    - name: Lint Ansible Docker Run Playbooks
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: |
+          VisualOffice-Infra/ansible/playbooks/docker/run_multihost.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_compose.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_standalone.yml
 
-    - name: Install pip
-      run: python -m pip install --upgrade pip
-
-    - name: Install ansible-lint
-      run: pip install ansible-lint
-
-    - name: Lint docker playbooks
-      run: |
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_multihost.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_compose.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_standalone.yml
-
-    - name: Lint docker tasks
-      run: |
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/install_docker.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_postgres.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_reader.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_webapp.yml
-          ansible-lint VisualOffice-Infra/ansible/playbooks/docker/run_writer.yml
+    - name: Lint Ansible Docker Tasks
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: |
+          VisualOffice-Infra/ansible/playbooks/docker/install_docker.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_postgres.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_reader.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_webapp.yml
+          VisualOffice-Infra/ansible/playbooks/docker/run_writer.yml
