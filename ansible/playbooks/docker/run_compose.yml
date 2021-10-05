@@ -16,10 +16,9 @@
           dest: /opt/visualoffice/docker-compose.yml
           mode: '0755'
 
-      - name: Create docker network
-        ansible.builtin.shell:
-          cmd: docker network create frontend
-        ignore_errors: yes
+      - name: Create a network
+        community.docker.docker_network:
+          name: frontend
 
       - name: Create and start services
         community.docker.docker_compose:
