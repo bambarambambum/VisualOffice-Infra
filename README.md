@@ -39,3 +39,5 @@ ansible-playbook ansible/playbooks/docker/tasks/install_docker.yml --extra-vars 
 ```sh
 ansible-playbook ansible/playbooks/docker/run_multihost.yml --extra-vars "ansible_sudo_pass=password"
 ```
+# CI
+С помощью Github Actions проверяются все плейбуки инструментом Ansible-lint при пуше в мастер.
