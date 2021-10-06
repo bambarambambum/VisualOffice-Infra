@@ -7,9 +7,9 @@
 
   - name: Install specified WebApp python requirements
     pip:
-      requirements: /home/{{ssh_user}}/VisualOfficeApp-Python/webapp/requirements.txt
+      requirements: /home/{{ ssh_user }}/VisualOfficeApp-Python/webapp/requirements.txt
     ignore_errors: true
-  
+
   - name: Install gunicorn
     pip:
       name: gunicorn
