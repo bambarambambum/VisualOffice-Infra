@@ -36,3 +36,20 @@ jobs:
           ansible/playbooks/docker/run_reader.yml
           ansible/playbooks/docker/run_webapp.yml
           ansible/playbooks/docker/run_writer.yml
+
+    - name: Lint Ansible Service Playbooks
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: |
+          ansible/playbooks/service/run_multihost.yml
+          ansible/playbooks/service/run_standalone.yml
+
+    - name: Lint Ansible Service Tasks
+      uses: ansible/ansible-lint-action@master
+      with:
+        targets: |
+          ansible/playbooks/service/clone_app.yml
+          ansible/playbooks/service/install_pip.yml
+          ansible/playbooks/service/run_reader.yml
+          ansible/playbooks/service/run_webapp.yml
+          ansible/playbooks/service/run_writer.yml
