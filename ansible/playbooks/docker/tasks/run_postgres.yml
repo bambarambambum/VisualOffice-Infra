@@ -10,7 +10,7 @@
         POSTGRES_USER: "{{ postgres_user }}"
         POSTGRES_PASSWORD: "{{ postgres_password }}"
       volumes:
-        - '/home/{{ssh_user}}/docker/volumes/postgres:/var/lib/postgresql/data'
+        - '/home/{{ ssh_user }}/docker/volumes/postgres:/var/lib/postgresql/data'
 
   - name: Create and run container with test data to fill database
     community.docker.docker_container:
