@@ -1,6 +1,6 @@
 ---
   - name: Get hostvars reader_host and writer_host if exist
-    set_fact: 
+    set_fact:
       reader_host: "{{ hostvars['do-02'].ansible_host }}"
       writer_host: "{{ hostvars['do-03'].ansible_host }}"
     ignore_errors: yes

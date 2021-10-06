@@ -7,7 +7,7 @@
 
       - name: Install pip
         include_tasks: tasks/install_pip.yml
-      
+
       - name: Run webapp
         include_tasks: tasks/run_webapp.yml
 
