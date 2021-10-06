@@ -12,7 +12,7 @@
       ports:
       - "8000:8000"
       env:
-        READER_HOST: "{{ reader_container_name if reader_host is undefined 
+        READER_HOST: "{{ reader_container_name if reader_host is undefined
                          else reader_host }}"
-        WRITER_HOST: "{{ writer_container_name if writer_host is undefined 
+        WRITER_HOST: "{{ writer_container_name if writer_host is undefined
                          else writer_host }}"

@@ -1,6 +1,6 @@
 ---
   - name: Get hostvars postgres_host if exist
-    set_fact: 
+    set_fact:
       postgres_host: "{{ hostvars['do-04'].ansible_host }}"
     ignore_errors: yes
 
@@ -11,5 +11,5 @@
       ports:
       - "8002:8002"
       env:
-        DATABASE_HOST: "{{ postgres_container_name if postgres_host is undefined 
+        DATABASE_HOST: "{{ postgres_container_name if postgres_host is undefined
                            else postgres_host }}"
