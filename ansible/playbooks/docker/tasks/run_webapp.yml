@@ -4,7 +4,7 @@
       reader_host: "{{ hostvars['do-02'].ansible_host }}"
       writer_host: "{{ hostvars['do-03'].ansible_host }}"
     ignore_errors: yes
-    
+
   - name: Create and run VisualOffice-webapp container
     community.docker.docker_container:
       name: '{{ webapp_container_name }}'
