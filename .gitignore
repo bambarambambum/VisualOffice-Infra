@@ -1,5 +1,12 @@
+# Ansible
 roles
 hosts
 all.yml
 app.yml
 test.yml
+# Terrafrom
+.terraform
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup

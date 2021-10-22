@@ -1,55 +1,137 @@
-resource "aws_vpc" "internal" {
-  cidr_block = "${var.vpc_cidr_private}"
-
+# Define our VPC
+resource "aws_vpc" "default" {
+  cidr_block = "${var.vpc_cidr}"
+  enable_dns_hostnames = true
   tags = {
-    Name = "Internal Network"
+        Name        = "My-VPC"
   }
 }
 
-resource "aws_subnet" "subnet-internal" {
-  vpc_id            = "${aws_vpc.internal.id}"
-  cidr_block        = "${var.vpc_cidr_private}"
+# Define the public subnet
+resource "aws_subnet" "public-subnet" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "${var.public_subnet_cidr}"
+
   tags = {
-    Name            = "Internal subnet"
+    Name = "Web Public Subnet"
   }
 }
 
-resource "aws_vpc" "external" {
-  cidr_block = "${var.vpc_cidr_external}"
+# Define the private subnet
+resource "aws_subnet" "private-subnet" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "${var.private_subnet_cidr}"
 
   tags = {
-    Name = "External Network"
+    Name = "Services Private Subnet"
   }
 }
 
-resource "aws_subnet" "subnet-external" {
-  vpc_id            = "${aws_vpc.external.id}"
-  cidr_block        = "${var.vpc_cidr_external}"
+# Define the internet gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = "${aws_vpc.default.id}"
+
   tags = {
-    Name            = "External subnet"
+    Name = "VPC IGW"
   }
 }
 
-## Internet gateway
-resource "aws_internet_gateway" "gateway" {
-    vpc_id = "${aws_vpc.external.id}"
+# Define the route table
+resource "aws_route_table" "web-public-rt" {
+  vpc_id = "${aws_vpc.default.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
+
+  tags = {
+    Name = "Public Subnet RT"
+  }
 }
 
-
-## Elastic IP for NAT GW
-resource "aws_eip" "eip" {
-  vpc        = true
-  depends_on = ["aws_internet_gateway.gateway"]
+# Assign the route table to the public Subnet
+resource "aws_route_table_association" "web-public-rt" {
+  subnet_id = "${aws_subnet.public-subnet.id}"
+  route_table_id = "${aws_route_table.web-public-rt.id}"
 }
 
+# Define the security group for public subnet
+resource "aws_security_group" "sgweb" {
+  name = "vpc_web"
+  description = "Allow incoming HTTP connections & SSH access"
 
-## NAT gateway
-resource "aws_nat_gateway" "gateway" {
-    allocation_id = "${aws_eip.eip.id}"
-    subnet_id     = "${aws_subnet.subnet-external.id}"
-    depends_on    = ["aws_internet_gateway.gateway"]
+  ingress {
+    from_port = 8000
+    to_port = 8000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = -1
+    to_port = -1
+    protocol = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks =  ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  vpc_id="${aws_vpc.default.id}"
+
+  tags = {
+    Name = "Web Server SG"
+  }
 }
 
-output "NAT_GW_IP" {
-  value = "${aws_eip.eip.public_ip}"
+# Define the security group for private subnet
+resource "aws_security_group" "sgservices"{
+  name = "sg_test_web"
+  description = "Allow traffic from public subnet"
+
+  ingress {
+    from_port = 8001
+    to_port = 8001
+    protocol = "tcp"
+    cidr_blocks = ["${var.public_subnet_cidr}"]
+  }
+
+  ingress {
+    from_port = 8002
+    to_port = 8002
+    protocol = "tcp"
+    cidr_blocks = ["${var.public_subnet_cidr}"]
+  }
+
+  ingress {
+    from_port = -1
+    to_port = -1
+    protocol = "icmp"
+    cidr_blocks = ["${var.public_subnet_cidr}"]
+  }
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["${var.public_subnet_cidr}"]
+  }
+
+  vpc_id = "${aws_vpc.default.id}"
+
+  tags = {
+    Name = "Services SG"
+  }
 }
