@@ -20,5 +20,5 @@ variable "private_subnet_cidr" {
 
 variable "key_path" {
   description = "SSH Public Key path"
-  default = "~/.ssh/user.pub"
+  default = "~/.ssh/androsovm.pub"
 }

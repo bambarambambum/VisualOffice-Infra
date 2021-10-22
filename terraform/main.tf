@@ -18,7 +18,7 @@ resource "aws_eip" "static_ip" {
 
 # Define SSH key pair for our instances
 resource "aws_key_pair" "default" {
-  key_name = "user"
+  key_name = "androsovm"
   public_key = "${file("${var.key_path}")}"
 }
 
@@ -29,6 +29,7 @@ resource "aws_instance" "web_app" {
   subnet_id = "${aws_subnet.public-subnet.id}"
   vpc_security_group_ids = ["${aws_security_group.sgweb.id}"]
   associate_public_ip_address = true
+  key_name = "androsovm"
 
   tags = {
     Name = "do-1"
@@ -43,6 +44,7 @@ resource "aws_instance" "services" {
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.private-subnet.id}"
   vpc_security_group_ids = ["${aws_security_group.sgservices.id}"]
+  key_name = "androsovm"
 
   tags = {
     Name = "do-${count.index + 2}"
