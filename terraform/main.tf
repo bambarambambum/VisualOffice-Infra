@@ -63,7 +63,26 @@ resource "local_file" "ssh_config" {
       key_name = "${var.key_name}"
     }
   )
-  filename = "./config"
+  filename = "./files/config"
+  file_permission = "0644"
+}
+
+# generate config file for Ansible
+resource "local_file" "ansible_config" {
+  content = templatefile("./templates/ansible.cfg.tpl",
+    {
+      key_name = "${var.key_name}"
+      remote_user = "ubuntu"
+    }
+  )
+  filename = "./files/ansible.cfg"
+  file_permission = "0644"
+}
+
+# generate hosts file for Ansible
+resource "local_file" "ansible_hosts" {
+  content = templatefile("./templates/hosts.tpl", {})
+  filename = "./files/hosts"
   file_permission = "0644"
 }
 
