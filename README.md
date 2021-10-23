@@ -40,4 +40,53 @@ ansible-playbook ansible/playbooks/docker/tasks/install_docker.yml --extra-vars 
 ansible-playbook ansible/playbooks/docker/run_multihost.yml --extra-vars "ansible_sudo_pass=password"
 ```
 # CI
-С помощью Github Actions проверяются все плейбуки инструментом Ansible-lint при пуше в мастер.
+С помощью Github Actions проверяются все плейбуки инструментом Ansible-lint при пуше в мастер.  
+## Terraform
+С помощью Terraform и AWS создаются 4 хоста под приложение, создается сеть VPC, 2 подсети, настраиваются таблица маршрутизации, генерируются файлы SSH Config (jump хосты), ansible.cfg и ansible hosts файл.  
+# variables.tf
+aws_region - Регион.  
+vpc_cidr - Сеть для VPC.  
+public_subnet-cidr - Публичная подсеть с доступом в интернет.  
+private_subnet_cidr - Частная подсеть без доступа в интернет, с доступом до публичной сети и наоборот.  
+key_path - Путь до открытого ключа.    
+key_name - Имя закрытого ключа.  
+# Запуск
+Тесты производились на образе Ubuntu 20.04
+1. Установите awscli, если отсутствует.  
+```sh
+sudo apt install awscli
+```
+2. Установите terraform, если отсутствует.  
+```sh
+curl -O https://releases.hashicorp.com/terraform/1.0.9/terraform_1.0.9_linux_amd64.zip  
+unzip terraform_1.0.9_linux_amd64.zip   
+sudo cp terraform /usr/local/bin/  
+```
+3. Настройте AWS (Необходимо знать Access Key ID, Secret Acces Key вашей УЗ)  
+Подробнее тут: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html  
+```sh
+aws configure
+```
+4. Возьмите существующую или сгенерируйте пару ключей, например так:  
+```sh
+ssh-keygen -t rsa -b 4096 -C "nickname@email.com"
+```
+5. Положите открытый и закрытый ключ по пути ~/.ssh/  
+6. Отредактируйте variables.tf, указав там название закрытого ключа и путь до открытого ключа.  
+7. В папке terraform проинициализируйте рабочую директорию терраформа.  
+```sh
+terraform init
+```
+8. Запустите terraform plan  
+```sh
+terraform plan
+```
+9. Создайте инфраструктуру  
+```sh
+terraform apply
+```
+10. В директории terraform/files вы найдете:  
+ansible.cfg - Конфигурация для Ansible, нужно положить по пути ../ansible/ansible.cfg  
+config - Конфигурация для SSH (jump hosts), нужно положить по пути ~/.ssh/config  
+hosts - Хост файл для Ansible, нужно положить по пути ../ansible/hosts
+  
