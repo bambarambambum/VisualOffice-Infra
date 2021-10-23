@@ -22,3 +22,8 @@ variable "key_path" {
   description = "SSH Public Key path"
   default = "~/.ssh/androsovm.pub"
 }
+
+variable "key_name" {
+  description = "SSH Private Key Name"
+  default = "androsovm"
+}
