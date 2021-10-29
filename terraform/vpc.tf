@@ -97,7 +97,7 @@ resource "aws_security_group" "sgweb" {
 }
 
 # Define the security group for private subnet
-resource "aws_security_group" "sgservices"{
+resource "aws_security_group" "sgservices" {
   name = "sg_test_web"
   description = "Allow traffic from public subnet"
 

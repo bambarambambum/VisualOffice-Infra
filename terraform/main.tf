@@ -27,7 +27,7 @@ resource "aws_instance" "web_app" {
   ami           = "ami-05f7491af5eef733a"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.public-subnet.id
-  vpc_security_group_ids = ["aws_security_group.sgweb.id"]
+  vpc_security_group_ids = [aws_security_group.sgweb.id]
   associate_public_ip_address = true
   key_name = var.key_name
 
@@ -43,7 +43,7 @@ resource "aws_instance" "services" {
   ami           = "ami-05f7491af5eef733a"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.private-subnet.id
-  vpc_security_group_ids = ["aws_security_group.sgservices.id"]
+  vpc_security_group_ids = [aws_security_group.sgservices.id]
   key_name = var.key_name
 
   tags = {
