@@ -47,7 +47,7 @@ resource "aws_instance" "services" {
   key_name = var.key_name
 
   tags = {
-    Name = do-count.index + 2
+    Name = count.index + 2
     Project = "VisualOffice-App-Python"
   }
 }
