@@ -16,9 +16,9 @@ jobs:
         uses: terraform-linters/setup-tflint@v1
 
       - name: Lint main.tf
-        run: tflint main.tf
+        run: tflint terraform/main.tf
 
       - name: Lint vpc.tf
-        run: tflint main.tf
+        run: tflint terraform/main.tf
 
         
