@@ -9,7 +9,7 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  region  = "${var.aws_region}"
+  region  = var.aws_region
 }
 
 resource "aws_eip" "static_ip" {
@@ -18,18 +18,18 @@ resource "aws_eip" "static_ip" {
 
 # Define SSH key pair for our instances
 resource "aws_key_pair" "default" {
-  key_name = "${var.key_name}"
-  public_key = "${file("${var.key_path}")}"
+  key_name = var.key_name
+  public_key = file(var.key_path)
 }
 
 resource "aws_instance" "web_app" {
 
   ami           = "ami-05f7491af5eef733a"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.public-subnet.id}"
-  vpc_security_group_ids = ["${aws_security_group.sgweb.id}"]
+  subnet_id = aws_subnet.public-subnet.id
+  vpc_security_group_ids = ["aws_security_group.sgweb.id"]
   associate_public_ip_address = true
-  key_name = "${var.key_name}"
+  key_name = var.key_name
 
   tags = {
     Name = "do-1"
@@ -42,12 +42,12 @@ resource "aws_instance" "services" {
   count         = 3
   ami           = "ami-05f7491af5eef733a"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.private-subnet.id}"
-  vpc_security_group_ids = ["${aws_security_group.sgservices.id}"]
-  key_name = "${var.key_name}"
+  subnet_id = aws_subnet.private-subnet.id
+  vpc_security_group_ids = ["aws_security_group.sgservices.id"]
+  key_name = var.key_name
 
   tags = {
-    Name = "do-${count.index + 2}"
+    Name = do-count.index + 2
     Project = "VisualOffice-App-Python"
   }
 }
@@ -60,7 +60,7 @@ resource "local_file" "ssh_config" {
       do-02-ip = aws_instance.services.0.private_ip
       do-03-ip = aws_instance.services.1.private_ip
       do-04-ip = aws_instance.services.2.private_ip
-      key_name = "${var.key_name}"
+      key_name = var.key_name
     }
   )
   filename = "./files/config"
@@ -71,7 +71,7 @@ resource "local_file" "ssh_config" {
 resource "local_file" "ansible_config" {
   content = templatefile("./templates/ansible.cfg.tpl",
     {
-      key_name = "${var.key_name}"
+      key_name = "var.key_name"
       remote_user = "ubuntu"
     }
   )
