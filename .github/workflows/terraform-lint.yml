@@ -1,0 +1,24 @@
+name: Infra-Terraform-Lint
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  terraform-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repo
+        uses: actions/checkout@v2
+      
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+
+      - name: Lint main.tf
+        run: tflint main.tf
+
+      - name: Lint vpc.tf
+        run: tflint main.tf
+
+        
